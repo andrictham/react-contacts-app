@@ -8,20 +8,28 @@ class ListContacts extends React.Component {
 			<ol className="contact-list">
 				{contacts.map(contact => {
 					return (
-						<li>
-							<img
-								src={contact.avatarURL}
-								width="100"
-								alt={`Avatar for ${contact.name}`}
+						<li key={contact.id} className="contact-list-item">
+							<div
+								className="contact-avatar"
+								style={{
+									backgroundImage: `url(${contact.avatarURL})`,
+								}}
 							/>
-							<h1>{contact.name}</h1>
-							<p>{contact.email}</p>
+							<div className="contact-details">
+								<p>{contact.name}</p>
+								<p>{contact.email}</p>
+							</div>
+							<button className="contact-remove" />
 						</li>
 					)
 				})}
 			</ol>
 		)
 	}
+}
+
+ListContacts.propTypes = {
+	contacts: PropTypes.array.isRequired,
 }
 
 export default ListContacts
