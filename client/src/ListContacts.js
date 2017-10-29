@@ -24,11 +24,21 @@ class ListContacts extends Component {
 		let showingContacts
 		// If someone has typed in our input field:
 		if (this.state.query) {
-			// TODO: Find out which contacts match their query, using regex
+			// `escapeRegExp` helps us to automatically escape special characters that are used as delimiters, so they can be treated as a string literal.
+			// 'i' ignores case-sensitivity.
+			const match = new RegExp(escapeRegExp(this.state.query), 'i')
+			showingContacts = this.props.contacts.filter(
+				// If contact matches our query
+				contact => match.test(contact.name),
+			)
 		} else {
-			// TODO: Show whatever the contacts initially was
+			// Show whatever the contacts initially was
 			showingContacts = this.props.contacts
 		}
+
+		// Sort by alphabetical order
+		showingContacts.sort(sortBy('name'))
+
 		return (
 			<div className="list-contacts">
 				<div className="list-contacts-top">
@@ -41,7 +51,7 @@ class ListContacts extends Component {
 					/>
 				</div>
 				<ol className="contact-list">
-					{contacts.map(contact => {
+					{showingContacts.map(contact => {
 						return (
 							<li key={contact.id} className="contact-list-item">
 								<div
