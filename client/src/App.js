@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 import ListContacts from './ListContacts'
 
 class App extends Component {
+	constructor(props) {
+		super(props)
+		this.removeContact = this.removeContact.bind(this)
+	}
+
 	state = {
 		contacts: [
 			{
@@ -24,11 +29,25 @@ class App extends Component {
 			},
 		],
 	}
+
+	removeContact = deletedContact => {
+		// We’re returning an object literal inside this.setState, so our function body needs to be wrapped with (). https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#Returning_object_literals
+		this.setState(prevState => ({
+			contacts: prevState.contacts.filter(
+				// Filter out any contacts whose ID matches our deleted contact.
+				contact => contact.id !== deletedContact.id,
+			),
+		}))
+	}
+
 	render() {
 		const { contacts } = this.state
 		return (
 			<div>
-				<ListContacts contacts={contacts} />
+				<ListContacts
+					contacts={contacts}
+					onDeleteContact={this.removeContact}
+				/>
 			</div>
 		)
 	}
