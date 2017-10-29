@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import escapeRegExp from 'escape-string-regexp'
+import sortBy from 'sort-by'
 
 class ListContacts extends Component {
 	static propTypes = {
@@ -19,6 +21,14 @@ class ListContacts extends Component {
 
 	render() {
 		const { contacts, onDeleteContact } = this.props
+		let showingContacts
+		// If someone has typed in our input field:
+		if (this.state.query) {
+			// TODO: Find out which contacts match their query, using regex
+		} else {
+			// TODO: Show whatever the contacts initially was
+			showingContacts = this.props.contacts
+		}
 		return (
 			<div className="list-contacts">
 				<div className="list-contacts-top">
