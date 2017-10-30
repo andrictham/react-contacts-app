@@ -15,28 +15,32 @@ class ListContacts extends Component {
 
 	updateQuery = query => {
 		this.setState({
-			query: query.trim(),
+			query: query.trim(), // `.trim` gets rid of trailing whitespaces
 		})
 	}
 
 	render() {
 		const { contacts, onDeleteContact } = this.props
+		const { query } = this.state
 		let showingContacts
 		// If someone has typed in our input field:
-		if (this.state.query) {
+		if (query) {
 			// `escapeRegExp` helps us to automatically escape special characters that are used as delimiters, so they can be treated as a string literal.
 			// 'i' ignores case-sensitivity.
-			const match = new RegExp(escapeRegExp(this.state.query), 'i')
-			showingContacts = this.props.contacts.filter(
+			const match = new RegExp(escapeRegExp(query), 'i')
+			showingContacts = contacts.filter(
 				// If contact matches our query
 				contact => match.test(contact.name),
 			)
 		} else {
 			// Show whatever the contacts initially was
-			showingContacts = this.props.contacts
+			showingContacts = contacts
 		}
 
 		// Sort by alphabetical order
+		// `.sort` is a built in JS method on arrays
+		// `sortBy` is a small utility function,
+		// which helps us sort alphabetically
 		showingContacts.sort(sortBy('name'))
 
 		return (
@@ -46,7 +50,7 @@ class ListContacts extends Component {
 						type="text"
 						className="search-contacts"
 						placeholder="Search contacts"
-						value={this.state.query}
+						value={query}
 						onChange={event => this.updateQuery(event.target.value)}
 					/>
 				</div>

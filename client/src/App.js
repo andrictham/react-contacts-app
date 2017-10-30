@@ -30,12 +30,12 @@ class App extends Component {
 		],
 	}
 
-	removeContact = deletedContact => {
+	removeContact = selectedContact => {
 		// We’re returning an object literal inside this.setState, so our function body needs to be wrapped with (). https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#Returning_object_literals
 		this.setState(prevState => ({
 			contacts: prevState.contacts.filter(
 				// Filter out any contacts whose ID matches our deleted contact.
-				contact => contact.id !== deletedContact.id,
+				contact => contact.id !== selectedContact.id,
 			),
 		}))
 	}
