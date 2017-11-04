@@ -41,7 +41,7 @@ class App extends Component {
 				<Route
 					exact
 					path="/"
-					{/* We want to be able to pass props to our component, so we use React Router’s render prop, which takes in a function that returns what we want to render. Since the body of the function is an object literal, we have to wrap it in () instead of {}. */}
+					// We want to be able to pass props to our component, so we use React Router’s render prop, which takes in a function that returns what we want to render. Since the body of the function is an object literal, we have to wrap it in () instead of {}.
 					render={() => (
 						<ListContacts
 							contacts={contacts}
