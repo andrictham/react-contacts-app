@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
 import ListContacts from './ListContacts'
 import CreateContact from './CreateContact'
 import * as ContactsAPI from './utils/ContactsAPI'
@@ -10,7 +11,6 @@ class App extends Component {
 	}
 
 	state = {
-		screen: 'list', // list, create
 		contacts: [],
 	}
 
@@ -38,18 +38,18 @@ class App extends Component {
 		const { contacts } = this.state
 		return (
 			<div>
-				{this.state.screen === 'list' && (
-					<ListContacts
-						contacts={contacts}
-						onDeleteContact={this.removeContact}
-						onNavigate={() => {
-							this.setState({
-								screen: 'create',
-							})
-						}}
-					/>
-				)}
-				{this.state.screen === 'create' && <CreateContact />}
+				<Route
+					exact
+					path="/"
+					{/* We want to be able to pass props to our component, so we use React Router’s render prop, which takes in a function that returns what we want to render. Since the body of the function is an object literal, we have to wrap it in () instead of {}. */}
+					render={() => (
+						<ListContacts
+							contacts={contacts}
+							onDeleteContact={this.removeContact}
+						/>
+					)}
+				/>
+				<Route exact path="/create" component={CreateContact} />
 			</div>
 		)
 	}
