@@ -12,6 +12,22 @@ class App extends Component {
 
 	state = {
 		contacts: [],
+		// contacts: [
+		// 	{
+		// 		id: '...',
+		// 		avatarURL: '...',
+		//		name: 'John Appleseed',
+		// 		email: 'name@email.com'
+		// 	}
+		// ]
+	}
+
+	createContact = contact => {
+		ContactsAPI.create(contact).then(contact => {
+			this.setState(state => ({
+				contacts: state.contacts.concat([contact]),
+			}))
+		})
 	}
 
 	removeContact = selectedContact => {
@@ -49,7 +65,20 @@ class App extends Component {
 						/>
 					)}
 				/>
-				<Route exact path="/create" component={CreateContact} />
+				<Route
+					exact
+					path="/create"
+					render={({ history }) => (
+						<CreateContact
+							onCreateContact={contact => {
+								this.createContact(contact)
+								// history is a prop given to us from Router
+								// history.push programmatically controls the URL
+								history.push('/')
+							}}
+						/>
+					)}
+				/>
 			</div>
 		)
 	}
